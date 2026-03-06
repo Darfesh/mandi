@@ -13,24 +13,23 @@ class ShellView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final t = Translations.of(context); // ← Get translations!
+    final t = Translations.of(context);
 
     return Scaffold(
       appBar: AppBar(
-        title: Center(child: Text(t.app.name)), // ✅ "Mandi" / "ماندي"
+        title: Center(child: Text(t.app.name)),
         automaticallyImplyLeading: false,
       ),
       body: Stack(
-        // ✅ Stack wrapper!
         children: [
-          child, // Je normale content
-          // ✅ Positioned werkt nu perfect
+          child,
           Positioned(
             right: 20,
             bottom: 100,
             child: FloatingActionButton(
               heroTag: 'bug_report',
-              onPressed: () => launchUrl(Uri.parse('mailto:your@email.com?subject=Bug%20Report&body=Check%20email')),
+              onPressed: () => launchUrl(Uri.parse(
+                  'mailto:your@email.com?subject=Bug%20Report&body=Check%20email')),
               backgroundColor: Colors.orange,
               child: Icon(Icons.bug_report),
             ),
@@ -43,11 +42,11 @@ class ShellView extends StatelessWidget {
         items: [
           BottomNavigationBarItem(
             icon: const Icon(Icons.article),
-            label: t.navigation.news, // ✅ Vertaald! (moet je nog toevoegen in JSON)
+            label: t.navigation.news,
           ),
           BottomNavigationBarItem(
             icon: const Icon(Icons.person),
-            label: t.navigation.profile, // ✅ Vertaald!
+            label: t.navigation.profile,
           ),
         ],
       ),

@@ -66,7 +66,7 @@ class AuthService {
       Logger.success(runtimeType.toString(), '✅ LOGIN success');
     } catch (e) {
       _isAuthenticated.value = false;
-      Logger.error(runtimeType.toString(), '❌ LOGIN failed: $e');
+      Logger.error(runtimeType.toString(), 'LOGIN failed: $e');
       rethrow;
     }
   }

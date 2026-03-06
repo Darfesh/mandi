@@ -6,6 +6,7 @@ import 'package:mandi/core/services/app_info_service.dart';
 import 'package:mandi/core/services/auth_service.dart';
 import 'package:mandi/core/services/banner_service.dart';
 import 'package:mandi/core/services/client_service.dart';
+import 'package:mandi/core/services/news_service.dart';
 import 'package:mandi/core/services/user_repository.dart';
 import 'package:mandi/core/services/dialog_service.dart';
 import 'package:mandi/core/services/error_display_service.dart';
@@ -28,6 +29,11 @@ void setupLocator() {
   locator.registerSingleton(SharedPreferencesService());
   locator.registerSingleton(ClientService());
   locator.registerSingleton(RealtimeService());
+  locator.registerSingleton(
+    NewsService(
+      databases: Databases(locator<ClientService>().client),
+    ),
+  );
 
   locator.registerLazySingleton(() => UserService(
         realtimeService: locator<RealtimeService>(),

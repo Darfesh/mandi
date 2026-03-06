@@ -10,8 +10,6 @@ class Environment {
 
   // Database
   static const String databaseId = '68d2cc0a00207193ffeb';
-  static const String newsTableId = 'news';
-  static const String usersCollectionId = 'users';
 
   // Storage
   static const String bucketID = '698f385b00095eb336ac';

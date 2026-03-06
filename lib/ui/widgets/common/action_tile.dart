@@ -4,7 +4,7 @@ import 'package:mandi/core/constants/environment.dart';
 import 'package:mandi/ui/widgets/common/base_action_card.dart';
 
 class ActionTile extends StatelessWidget {
-  final IconData icon;
+  final IconData? icon;
   final Color? iconColor;
   final String label;
   final String? subtitle;
@@ -17,7 +17,7 @@ class ActionTile extends StatelessWidget {
 
   const ActionTile({
     super.key,
-    required this.icon,
+    this.icon,
     this.iconColor,
     required this.label,
     this.subtitle,
@@ -45,12 +45,14 @@ class ActionTile extends StatelessWidget {
       child: Row(
         mainAxisAlignment: centerContent ? MainAxisAlignment.center : MainAxisAlignment.start,
         children: [
-          Icon(
-            icon,
-            color: iconColor ?? themeIconColor,
-            size: Environment.size24,
-          ),
-          const Gap(Environment.size16),
+          if (icon != null) ...[
+            Icon(
+              icon,
+              color: iconColor ?? themeIconColor,
+              size: Environment.size24,
+            ),
+            const Gap(Environment.size16),
+          ],
           if (centerContent)
             Column(
               crossAxisAlignment: CrossAxisAlignment.center,

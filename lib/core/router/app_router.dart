@@ -4,6 +4,7 @@ import 'package:mandi/core/locator.dart';
 import 'package:mandi/core/viewmodels/auth_view_model.dart';
 import 'package:mandi/ui/views/home_view.dart';
 import 'package:mandi/ui/views/login_view.dart';
+import 'package:mandi/ui/views/privacy_policy_view.dart';
 import 'package:mandi/ui/views/profile_view.dart';
 import 'package:mandi/ui/views/registration_view.dart';
 import 'package:mandi/ui/views/reservations_view.dart';
@@ -41,6 +42,11 @@ class AppRouter {
           path: '/reservationsView',
           name: 'reservationsView',
           builder: (context, state) => ReservationsView(),
+        ),
+        GoRoute(
+          path: '/privacyPolicyView',
+          name: 'privacyPolicyView',
+          builder: (context, state) => PrivacyPolicyView(),
         ),
         ShellRoute(
           builder: (context, state, child) => ShellView(child: child),

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:appwrite/appwrite.dart';
 import 'package:flutter/foundation.dart';
+import 'package:mandi/core/constants/appwrite_collections.dart';
 import 'package:mandi/core/constants/environment.dart';
 import 'package:mandi/core/constants/realtime_channels.dart';
 import 'package:mandi/core/services/client_service.dart';
@@ -117,12 +118,11 @@ class AuthService {
 
       await databases.createDocument(
         databaseId: Environment.databaseId,
-        collectionId: Environment.usersCollectionId,
+        collectionId: AppwriteCollections.users,
         documentId: ID.unique(),
         data: {
           'userId': authUser.$id,
           'email': authUser.email,
-          'displayName': authUser.name,
           'fullName': authUser.name,
           'avatarUrl': null,
         },
@@ -137,16 +137,23 @@ class AuthService {
   }
 
   void _subscribeToSessionEvents() {
-    Logger.info(runtimeType.toString(), '📡 Subscribing to session events');
+    Logger.info(runtimeType.toString(), '📡 Subscribing to account events');
     _sessionEventsSubscription =
         _realtimeService.subscribe(RealtimeChannels.account).listen((event) {
       Logger.log(runtimeType.toString(), '📨 Realtime: ${event.events}');
+
       if (event.events.any((e) => e.contains('session') && e.contains('delete'))) {
         Logger.info(runtimeType.toString(), '🔴 Session deleted remotely');
         _handleRemoteLogout();
       }
+
+      if (event.events.any((e) => e.contains('account') || e.contains('users'))) {
+        Logger.info(runtimeType.toString(), '🗑️ Account deleted remotely');
+        _handleRemoteLogout();
+      }
     });
   }
+
 
   void _handleRemoteLogout() {
     _isAuthenticated.value = false;

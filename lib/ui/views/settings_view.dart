@@ -2,13 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:mandi/core/locator.dart';
 import 'package:mandi/core/services/theme_service.dart';
+import 'package:mandi/core/viewmodels/auth_view_model.dart';
 import 'package:mandi/i18n/strings.g.dart';
+import 'package:mandi/ui/widgets/common/action_tile.dart';
 import 'package:mandi/ui/widgets/common/radio_tile.dart';
 import 'package:mandi/ui/widgets/common/section_header.dart';
+import 'package:mandi/ui/widgets/delete_progress_bottom_sheet.dart';
 
 class SettingsView extends StatelessWidget {
-  const SettingsView({super.key});
+  SettingsView({
+    super.key,
+  });
 
+  final _viewModel = locator<AuthViewModel>();
   @override
   Widget build(BuildContext context) {
     final themeService = locator<ThemeService>();
@@ -39,7 +45,6 @@ class SettingsView extends StatelessWidget {
               ),
               const Gap(16),
               RadioTile<String>(
-                leading: const Text('🇳🇱', style: TextStyle(fontSize: 24)),
                 title: t.settings.language.dutch,
                 value: 'nl',
                 groupValue: themeService.currentLanguage,
@@ -48,7 +53,6 @@ class SettingsView extends StatelessWidget {
               ),
               const Gap(12),
               RadioTile<String>(
-                leading: const Text('🇬🇧', style: TextStyle(fontSize: 24)),
                 title: t.settings.language.english,
                 value: 'en',
                 groupValue: themeService.currentLanguage,
@@ -57,7 +61,6 @@ class SettingsView extends StatelessWidget {
               ),
               const Gap(12),
               RadioTile<String>(
-                leading: const Text('🇸🇦', style: TextStyle(fontSize: 24)),
                 title: t.settings.language.arabic,
                 value: 'ar',
                 groupValue: themeService.currentLanguage,
@@ -95,6 +98,57 @@ class SettingsView extends StatelessWidget {
                 value: ThemeMode.dark,
                 groupValue: themeService.themeMode.value,
                 onChanged: (mode) => themeService.setThemeMode(mode),
+              ),
+              const Gap(32),
+              SectionHeader(
+                icon: Icons.warning_amber_outlined,
+                title: 'Danger zone',
+                theme: theme,
+              ),
+              const Gap(16),
+              ValueListenableBuilder(
+                valueListenable: _viewModel.userIsMarkedForDeletion,
+                builder: (context, markedForDeletion, _) {
+                  // If marked for deletion
+                  return markedForDeletion
+                      ? ActionTile(
+                          label: 'Cancel deletion 😱',
+                          onTap: () async {
+                            _viewModel.cancelAccountDeletion();
+                          },
+                          isDanger: true,
+                          showChevron: false,
+                          centerContent: true,
+                        )
+                      : ActionTile(
+                          label: 'Delete account',
+                          onTap: () async {
+                            final confirmed = await _viewModel.requestAccountDeletion();
+
+                            if (!confirmed || !context.mounted) return;
+
+                            await showModalBottomSheet<void>(
+                              backgroundColor: Colors.transparent,
+                              context: context,
+                              isDismissible: false,
+                              enableDrag: false,
+                              builder: (context) => Container(
+                                padding: const EdgeInsets.all(24),
+                                decoration: BoxDecoration(
+                                  color: theme.dialogBackgroundColor,
+                                  borderRadius: const BorderRadius.vertical(
+                                    top: Radius.circular(20),
+                                  ),
+                                ),
+                                child: DeleteProgressBottomSheet(viewModel: _viewModel),
+                              ),
+                            );
+                          },
+                          isDanger: true,
+                          showChevron: false,
+                          centerContent: true,
+                        );
+                },
               ),
             ],
           );

@@ -2,7 +2,7 @@
 
 import 'package:appwrite/appwrite.dart';
 import 'package:flutter/foundation.dart';
-import 'package:appwrite/appwrite.dart';
+import 'package:mandi/core/constants/appwrite_collections.dart';
 import 'package:mandi/core/constants/environment.dart';
 import 'package:mandi/core/models/user.dart';
 import 'package:mandi/core/services/realtime_service.dart';
@@ -41,6 +41,8 @@ class UserService {
 
   // ✅ Shared logic!
   Future<void> _fetchAndSetUser() async {
+    final x = userId;
+    if (x == null) return;
     try {
       Logger.info(runtimeType.toString(), 'Fetching user data...');
 
@@ -50,7 +52,7 @@ class UserService {
       // Check if user document exists
       final docs = await databases.listDocuments(
         databaseId: Environment.databaseId,
-        collectionId: Environment.usersCollectionId,
+        collectionId: AppwriteCollections.users,
         queries: [
           Query.equal('userId', appwriteUser.$id),
         ],
@@ -62,13 +64,14 @@ class UserService {
 
         await databases.createDocument(
           databaseId: Environment.databaseId,
-          collectionId: Environment.usersCollectionId,
+          collectionId: AppwriteCollections.users,
           documentId: ID.unique(),
           data: {
             'userId': appwriteUser.$id,
             'email': appwriteUser.email,
             'fullName': appwriteUser.name.split(' ').first,
             'avatarUrl': null,
+            'status': Role.user(x),
           },
           permissions: [
             Permission.read(Role.any()),
@@ -83,7 +86,7 @@ class UserService {
       // Fetch document (now guaranteed to exist)
       final updatedDocs = await databases.listDocuments(
         databaseId: Environment.databaseId,
-        collectionId: Environment.usersCollectionId,
+        collectionId: AppwriteCollections.users,
         queries: [
           Query.equal('userId', appwriteUser.$id),
         ],
@@ -111,7 +114,7 @@ class UserService {
       // 1. Find document by userId
       final docs = await databases.listDocuments(
         databaseId: Environment.databaseId,
-        collectionId: Environment.usersCollectionId,
+        collectionId: AppwriteCollections.users,
         queries: [
           Query.equal('userId', _currentUser.value!.id),
         ],
@@ -130,7 +133,7 @@ class UserService {
       // 4. Update document
       final updatedDoc = await databases.updateDocument(
         databaseId: Environment.databaseId,
-        collectionId: Environment.usersCollectionId,
+        collectionId: AppwriteCollections.users,
         documentId: documentId,
         data: {
           'avatarUrl': avatarUrl,

@@ -1,7 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:mandi/core/locator.dart';
-import 'package:mandi/i18n/strings.g.dart';
-
 enum ErrorType {
   // Network
   network,

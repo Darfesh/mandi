@@ -119,7 +119,7 @@ class ImageService {
       Logger.info(runtimeType.toString(), 'Deleting old avatar...');
 
       final storage = Storage(_clientService.client);
-      final fileId = 'avatar_$userId'; // ✅ Matches upload!
+      final fileId = 'avatar_$userId';
 
       await storage.deleteFile(
         bucketId: Environment.bucketID,

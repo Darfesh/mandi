@@ -1,9 +1,11 @@
+import 'package:appwrite/appwrite.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mandi/core/services/app_info_service.dart';
 import 'package:mandi/core/services/auth_service.dart';
 import 'package:mandi/core/services/banner_service.dart';
 import 'package:mandi/core/services/client_service.dart';
+import 'package:mandi/core/services/user_repository.dart';
 import 'package:mandi/core/services/dialog_service.dart';
 import 'package:mandi/core/services/error_display_service.dart';
 import 'package:mandi/core/services/image_service.dart';
@@ -35,6 +37,11 @@ void setupLocator() {
         realtimeService: locator<RealtimeService>(),
         userService: locator<UserService>(),
       ));
+  locator.registerLazySingleton(
+    () => UserRepository(
+      databases: Databases(locator<ClientService>().client),
+    ),
+  );
 
   locator.registerLazySingleton(() => ImageService(
         clientService: locator<ClientService>(),

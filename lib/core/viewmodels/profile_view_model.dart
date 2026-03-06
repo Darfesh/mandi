@@ -1,4 +1,6 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mandi/core/services/dialog_service.dart';
 import 'package:mandi/core/services/error_display_service.dart';
@@ -59,6 +61,15 @@ class ProfileViewModel extends BaseViewModel {
       Logger.error(runtimeType.toString(), 'Avatar update failed: $e');
       final error = ErrorHandler.handleException(e, stackTrace);
       _errorDisplayService.showError(error);
+    }
+  }
+
+  Future<void> openPrivacyPolicy(BuildContext context) async {
+    try {
+      Logger.info(runtimeType.toString(), 'Opening privacy policy');
+      context.push('/privacyPolicyView');
+    } catch (e) {
+      Logger.error(runtimeType.toString(), 'Failed to open privacy policy: $e');
     }
   }
 

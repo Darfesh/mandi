@@ -9,14 +9,14 @@ import 'package:mandi/ui/widgets/common/mandi_divider.dart';
 import 'package:mandi/ui/widgets/profile/user_info_card.dart';
 import 'package:mandi/ui/widgets/profile/app_version_footer.dart';
 
-import 'package:mandi/i18n/strings.g.dart'; // ← Import!
+import 'package:mandi/i18n/strings.g.dart';
 
 class ProfileView extends StatelessWidget {
   const ProfileView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final t = Translations.of(context); 
+    final t = Translations.of(context);
 
     return ViewModelBuilder<ProfileViewModel>(
       builder: (context, viewModel) {
@@ -58,6 +58,14 @@ class ProfileView extends StatelessWidget {
                       icon: Icons.calendar_today_outlined,
                       label: t.profile.myReservations,
                       onTap: () => context.push('/reservationsView'),
+                    ),
+                    const Gap(12),
+
+                    // Privacy statement
+                    ActionTile(
+                      icon: Icons.lock_outline,
+                      label: 'Privacy statement',
+                      onTap: () => viewModel.openPrivacyPolicy(context),
                     ),
                     const Gap(20),
 

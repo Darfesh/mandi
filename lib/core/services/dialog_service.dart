@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mandi/core/locator.dart';
 import 'package:mandi/i18n/strings.g.dart';
+import 'package:mandi/ui/settings/delete_account_dialog.dart';
 
 class DialogService {
   final GlobalKey<NavigatorState> _navigatorKey = locator<GlobalKey<NavigatorState>>();
@@ -64,6 +65,25 @@ class DialogService {
 
     return result ?? false;
   }
+
+  Future<bool> showDeleteAccountConfirmation() async {
+    final context = _context;
+    if (context == null) return false;
+
+    final t = _translations;
+    if (t == null) return false;
+
+    final result = await showDialog<bool>(
+      context: context,
+      builder: (context) => DeleteAccountDialog(
+        title: 'Account deletion',
+        message: 'You\'re about the delete your account! \n Type delete to confirm this.',
+      ),
+    );
+
+    return result ?? false;
+  }
+
 
   Future<bool> showLogoutConfirmation() async {
     final t = _translations;

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mandi/i18n/strings.g.dart'; // ← Import!
+import 'package:mandi/i18n/strings.g.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ShellView extends StatelessWidget {
   final Widget child;
@@ -19,7 +20,23 @@ class ShellView extends StatelessWidget {
         title: Center(child: Text(t.app.name)), // ✅ "Mandi" / "ماندي"
         automaticallyImplyLeading: false,
       ),
-      body: child,
+      body: Stack(
+        // ✅ Stack wrapper!
+        children: [
+          child, // Je normale content
+          // ✅ Positioned werkt nu perfect
+          Positioned(
+            right: 20,
+            bottom: 100,
+            child: FloatingActionButton(
+              heroTag: 'bug_report',
+              onPressed: () => launchUrl(Uri.parse('mailto:your@email.com?subject=Bug%20Report&body=Check%20email')),
+              backgroundColor: Colors.orange,
+              child: Icon(Icons.bug_report),
+            ),
+          ),
+        ],
+      ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _getCurrentIndex(context),
         onTap: (index) => _onItemTapped(context, index),

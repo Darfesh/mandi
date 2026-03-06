@@ -47,5 +47,5 @@ class User {
   }
 
   // Convenience getter
-  String get name => displayName ?? '$fullName';
+  String get name => displayName ?? 'fullName';
 }

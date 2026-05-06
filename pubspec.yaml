@@ -11,42 +11,41 @@ dependencies:
   flutter:
     sdk: flutter
 
-  cupertino_icons: ^1.0.8
-  appwrite: ^17.1.0
-  get_it: ^9.2.0
-  go_router: ^16.1.0
-  shared_preferences: ^2.5.3
-  package_info_plus: ^8.3.1
+  cupertino_icons: ^1.0.9
+  appwrite: ^24.0.0
+  get_it: ^9.2.1
+  go_router: ^17.2.3
+  shared_preferences: ^2.5.5
+  package_info_plus: ^9.0.1
   gap: ^3.0.1
   multi_listenable: ^0.9.3
-  slang: ^4.12.1
-  slang_flutter: ^4.12.1
-  slang_build_runner: ^4.12.1
+  slang: ^4.14.0
+  slang_flutter: ^4.14.0
+  slang_build_runner: ^4.14.0
   another_flushbar: ^1.12.32
-  image: ^4.7.2
-  image_picker: ^1.2.0
+  image: ^4.8.0
+  image_picker: ^1.2.2
   permission_handler: ^12.0.1
   url_launcher: ^6.3.2
-  webview_flutter: ^4.13.0
+  webview_flutter: ^4.13.1
   freezed_annotation: ^3.1.0
   dev: ^1.0.0
   json_annotation: ^4.9.0
   openpanel_flutter: ^0.2.0
 
 dev_dependencies:
-  freezed: ^3.0.6
-  build_runner: ^2.4.15
+  freezed: ^3.2.5
+  build_runner: ^2.15.0
   flutter_test:
     sdk: flutter
 
-  flutter_lints: ^5.0.0
-  json_serializable: ^6.9.5
+  flutter_lints: ^6.0.0
+  json_serializable: ^6.13.2
 
 flutter:
   uses-material-design: true
   generate: true
 
-
   assets:
-    - assets/images/
-    - assets/
+  - assets/images/
+  - assets/

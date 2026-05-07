@@ -41,8 +41,6 @@ class UserService {
 
   // ✅ Shared logic!
   Future<void> _fetchAndSetUser() async {
-    final x = userId;
-    if (x == null) return;
     try {
       Logger.info(runtimeType.toString(), 'Fetching user data...');
 
@@ -71,7 +69,7 @@ class UserService {
             'email': appwriteUser.email,
             'fullName': appwriteUser.name.split(' ').first,
             'avatarUrl': null,
-            'status': Role.user(x),
+            'status': Role.user(appwriteUser.$id),
           },
           permissions: [
             Permission.read(Role.any()),

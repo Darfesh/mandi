@@ -17,6 +17,7 @@ import 'package:mandi/core/services/theme_service.dart';
 import 'package:mandi/core/services/user_service.dart';
 import 'package:mandi/core/viewmodels/auth_view_model.dart';
 import 'package:mandi/core/viewmodels/home_view_model.dart';
+import 'package:mandi/core/viewmodels/news_view_model.dart';
 import 'package:mandi/core/viewmodels/profile_view_model.dart';
 
 final locator = GetIt.instance;
@@ -70,4 +71,5 @@ void setupLocator() {
   locator.registerSingleton(AuthViewModel());
   locator.registerSingleton(HomeViewModel());
   locator.registerFactory(() => ProfileViewModel());
+  locator.registerFactory(() => NewsViewModel(newsService: locator<NewsService>()));
 }

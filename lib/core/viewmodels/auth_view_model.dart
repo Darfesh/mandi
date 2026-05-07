@@ -72,14 +72,14 @@ class AuthViewModel extends BaseViewModel {
       // Completed state
       deletionStepNotifier.value = DeletionStep.completed;
       _analytics.trackEvent('account_deletion_completed');
-      Logger.success(runtimeType.toString(), '🎉 Account successfully marked for deletion!');
+      Logger.success(runtimeType.toString(), 'Account successfully marked for deletion!');
 
       // Wait 5 seconds for the user to see that process is complete
       await Future.delayed(const Duration(seconds: 5));
 
       return true;
     } catch (e) {
-      Logger.error(runtimeType.toString(), '❌ Deletion failed: $e');
+      Logger.error(runtimeType.toString(), 'Deletion failed: $e');
       setError('Account deletion failed: $e');
       deletionStepNotifier.value = DeletionStep.idle;
       return false;
@@ -94,7 +94,7 @@ class AuthViewModel extends BaseViewModel {
       if (user != null) {
         _userIsMarkedForDeletion.value = await _userRepository.checkIfUserIsMarkedForDeletion(user);
       } else {
-        Logger.info(runtimeType.toString(), '🔎 Could not find the user id: $user');
+        Logger.info(runtimeType.toString(), 'Could not find the user id: $user');
         _userIsMarkedForDeletion.value = false;
       }
     } catch (e) {

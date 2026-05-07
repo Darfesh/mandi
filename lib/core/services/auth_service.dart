@@ -43,15 +43,15 @@ class AuthService {
       await _account.get();
       _isAuthenticated.value = true;
       await _userService.fetchCurrentUser();
-      Logger.info(runtimeType.toString(), '✅ Session found');
+      Logger.info(runtimeType.toString(), 'Session found');
     } catch (e) {
       _isAuthenticated.value = false;
-      Logger.info(runtimeType.toString(), '❌ No active session');
+      Logger.info(runtimeType.toString(), 'No active session');
     }
   }
 
   Future<void> login(String email, String password) async {
-    Logger.log(runtimeType.toString(), '📧 LOGIN attempt for: $email');
+    Logger.log(runtimeType.toString(), 'LOGIN attempt for: $email');
     email = email.trim();
     password = password.trim();
 
@@ -63,7 +63,7 @@ class AuthService {
       _isAuthenticated.value = true;
       await _userService.fetchCurrentUser();
 
-      Logger.success(runtimeType.toString(), '✅ LOGIN success');
+      Logger.success(runtimeType.toString(), 'LOGIN success');
     } catch (e) {
       _isAuthenticated.value = false;
       Logger.error(runtimeType.toString(), 'LOGIN failed: $e');
@@ -77,9 +77,9 @@ class AuthService {
       await _account.deleteSession(sessionId: 'current');
       _isAuthenticated.value = false;
       _userService.clearUser();
-      Logger.success(runtimeType.toString(), '✅ LOGOUT success');
+      Logger.success(runtimeType.toString(), 'LOGOUT success');
     } catch (e) {
-      Logger.error(runtimeType.toString(), '❌ LOGOUT failed: $e');
+      Logger.error(runtimeType.toString(), 'LOGOUT failed: $e');
       rethrow;
     }
   }
@@ -107,7 +107,7 @@ class AuthService {
 
       await login(email, password);
     } catch (e) {
-      Logger.error(runtimeType.toString(), '❌ REGISTER failed: $e');
+      Logger.error(runtimeType.toString(), 'REGISTER failed: $e');
       rethrow;
     }
   }
@@ -128,27 +128,27 @@ class AuthService {
         },
       );
 
-      Logger.success(runtimeType.toString(), '✅ User document created');
+      Logger.success(runtimeType.toString(), 'User document created');
     } catch (e) {
-      Logger.error(runtimeType.toString(), '❌ Failed to create user document: $e');
+      Logger.error(runtimeType.toString(), 'Failed to create user document: $e');
       await _account.deleteIdentity(identityId: authUser.$id);
       rethrow;
     }
   }
 
   void _subscribeToSessionEvents() {
-    Logger.info(runtimeType.toString(), '📡 Subscribing to account events');
+    Logger.info(runtimeType.toString(), 'Subscribing to account events');
     _sessionEventsSubscription =
         _realtimeService.subscribe(RealtimeChannels.account).listen((event) {
       Logger.log(runtimeType.toString(), '📨 Realtime: ${event.events}');
 
       if (event.events.any((e) => e.contains('session') && e.contains('delete'))) {
-        Logger.info(runtimeType.toString(), '🔴 Session deleted remotely');
+        Logger.info(runtimeType.toString(), 'Session deleted remotely');
         _handleRemoteLogout();
       }
 
       if (event.events.any((e) => e.contains('account') || e.contains('users'))) {
-        Logger.info(runtimeType.toString(), '🗑️ Account deleted remotely');
+        Logger.info(runtimeType.toString(), 'Account deleted remotely');
         _handleRemoteLogout();
       }
     });
@@ -158,7 +158,7 @@ class AuthService {
   void _handleRemoteLogout() {
     _isAuthenticated.value = false;
     _userService.clearUser();
-    Logger.info(runtimeType.toString(), '🚪 Remote logout handled');
+    Logger.info(runtimeType.toString(), 'Remote logout handled');
   }
 
   void dispose() {

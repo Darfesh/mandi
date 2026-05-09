@@ -19,15 +19,15 @@ class Environment {
   /// Client secret should be injected by CI/CD, not committed.
   static const String openpanelUrl = String.fromEnvironment(
     'OPENPANEL_URL',
-    defaultValue: 'https://openpanel.usemandi.com',
+    defaultValue: 'https://openpanel.usemandi.com/api',
   );
   static const String openpanelClientId = String.fromEnvironment(
     'OPENPANEL_CLIENT_ID',
-    defaultValue: '8b70b8a1-caed-496d-b13d-b2df4da4fce3',
+    defaultValue: '8e2a996d-20a6-4d8d-9d9a-cef8ffd2fddb',
   );
   static const String openpanelClientSecret = String.fromEnvironment(
     'OPENPANEL_CLIENT_SECRET',
-    defaultValue: '',
+    defaultValue: 'sec_5af5c7615e1c4fd94427',
   );
 
   // Design constants

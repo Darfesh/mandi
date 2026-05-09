@@ -1,6 +1,7 @@
 import 'package:appwrite/appwrite.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:mandi/core/services/analytics_service.dart';
 import 'package:mandi/core/services/app_info_service.dart';
 import 'package:mandi/core/services/auth_service.dart';
 import 'package:mandi/core/services/banner_service.dart';
@@ -22,6 +23,7 @@ final locator = GetIt.instance;
 void setupLocator() {
   // Services
   locator.registerSingleton(GlobalKey<NavigatorState>());
+  locator.registerSingleton(AnalyticsService());
   locator.registerSingleton(AppInfoService());
   locator.registerSingleton(SharedPreferencesService());
   locator.registerSingleton(ClientService());

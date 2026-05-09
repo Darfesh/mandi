@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mandi/core/services/analytics_service.dart';
 import 'package:mandi/core/services/dialog_service.dart';
 import 'package:mandi/core/services/error_display_service.dart';
 import 'package:mandi/core/services/image_service.dart';
@@ -19,6 +20,7 @@ class ProfileViewModel extends BaseViewModel {
   final UserService _userService = locator<UserService>();
   final ImageService _imageService = locator<ImageService>();
   final ErrorDisplayService _errorDisplayService = locator<ErrorDisplayService>();
+  final AnalyticsService _analytics = locator<AnalyticsService>();
 
   ProfileViewModel() {
     Logger.init(runtimeType.toString());
@@ -56,6 +58,7 @@ class ProfileViewModel extends BaseViewModel {
 
       await _userService.updateAvatar(avatarUrl);
 
+      _analytics.trackEvent('avatar_updated');
       Logger.success(runtimeType.toString(), 'Avatar updated successfully');
     } on Exception catch (e, stackTrace) {
       Logger.error(runtimeType.toString(), 'Avatar update failed: $e');
@@ -66,6 +69,7 @@ class ProfileViewModel extends BaseViewModel {
 
   Future<void> openPrivacyPolicy(BuildContext context) async {
     try {
+      _analytics.trackEvent('privacy_policy_opened');
       Logger.info(runtimeType.toString(), 'Opening privacy policy');
       context.push('/privacyPolicyView');
     } catch (e) {

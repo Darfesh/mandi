@@ -44,6 +44,9 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
-# FVM - symlinks to local SDK paths
-.fvm/flutter_sdk
-.fvm/versions/
+# Platform-specific (tracked on separate branches)
+linux/
+
+# FVM - only track fvm_config.json
+.fvm/*
+!.fvm/fvm_config.json

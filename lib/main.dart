@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mandi/core/constants/environment.dart';
 import 'package:mandi/core/locator.dart';
 import 'package:mandi/core/router/app_router.dart';
 import 'package:mandi/core/services/app_info_service.dart';
@@ -7,11 +8,23 @@ import 'package:mandi/core/services/theme_service.dart';
 import 'package:mandi/ui/common/theme.dart';
 import 'package:mandi/i18n/strings.g.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:openpanel_flutter/openpanel_flutter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   LocaleSettings.useDeviceLocale();
   setupLocator();
+
+  await Openpanel.instance.initialize(
+    options: OpenpanelOptions(
+      url: Environment.openpanelUrl,
+      clientId: Environment.openpanelClientId,
+      clientSecret: Environment.openpanelClientSecret.isNotEmpty
+          ? Environment.openpanelClientSecret
+          : null,
+    ),
+  );
+
   await locator<SharedPreferencesService>().initialize();
   await locator<AppInfoService>().initialize();
   runApp(TranslationProvider(child: MyApp()));

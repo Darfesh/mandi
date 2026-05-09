@@ -10,6 +10,7 @@ import 'package:mandi/ui/views/registration_view.dart';
 import 'package:mandi/ui/views/reservations_view.dart';
 import 'package:mandi/ui/views/settings_view.dart';
 import 'package:mandi/ui/views/shell_view.dart';
+import 'package:openpanel_flutter/openpanel_flutter.dart';
 
 class AppRouter {
   final AuthViewModel _authViewModel = locator<AuthViewModel>();
@@ -22,6 +23,7 @@ class AppRouter {
       initialLocation: '/login',
       refreshListenable: _authViewModel.currentUser,
       navigatorKey: _navigatorKey,
+      observers: [OpenpanelObserver()],
       routes: [
         GoRoute(
           path: '/login',
@@ -100,5 +102,11 @@ class AppRouter {
         return null;
       },
     );
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Openpanel.instance.event(name: 'pageview', properties: {
+        'page': router.state.uri.toString(),
+      });
+    });
   }
 }

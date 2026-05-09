@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:mandi/core/locator.dart';
 import 'package:mandi/core/models/app_error.dart';
 import 'package:mandi/core/models/user.dart';
+import 'package:mandi/core/services/analytics_service.dart';
 import 'package:mandi/core/services/auth_service.dart';
 import 'package:mandi/core/services/dialog_service.dart';
 import 'package:mandi/core/services/error_display_service.dart';
@@ -29,6 +30,7 @@ class AuthViewModel extends BaseViewModel {
   final ErrorDisplayService _errorDisplayService = locator<ErrorDisplayService>();
   final ImageService _imageService = locator<ImageService>();
   final UserRepository _userRepository = locator<UserRepository>();
+  final AnalyticsService _analytics = locator<AnalyticsService>();
 
   ValueListenable<User?> get currentUser => _userService.currentUser;
   ValueListenable<bool> get isLoggedIn => _authService.isAuthenticated;
@@ -69,6 +71,7 @@ class AuthViewModel extends BaseViewModel {
 
       // Completed state
       deletionStepNotifier.value = DeletionStep.completed;
+      _analytics.trackEvent('account_deletion_completed');
       Logger.success(runtimeType.toString(), '🎉 Account successfully marked for deletion!');
 
       // Wait 5 seconds for the user to see that process is complete
@@ -106,6 +109,7 @@ class AuthViewModel extends BaseViewModel {
       try {
         Logger.info(runtimeType.toString(), 'Cancelling account deletion');
         await _userRepository.cancelDeletionOfAccount(user);
+        _analytics.trackEvent('account_deletion_cancelled');
         Logger.info(runtimeType.toString(), 'Scheduled user deletion reverted');
         _userIsMarkedForDeletion.value = false;
       } catch (e, stackTrace) {
@@ -146,6 +150,7 @@ class AuthViewModel extends BaseViewModel {
 
     try {
       await _authService.login(email, password);
+      _analytics.trackEvent('user_login');
     } catch (e) {
       setError('Login mislukt: ${e.toString()}');
     } finally {
@@ -159,6 +164,7 @@ class AuthViewModel extends BaseViewModel {
 
     try {
       await _authService.logout();
+      _analytics.trackEvent('user_logout');
     } catch (e) {
       setError('Logout mislukt: ${e.toString()}');
     } finally {
@@ -196,6 +202,7 @@ class AuthViewModel extends BaseViewModel {
         password: passwordController.text.trim(),
         fullName: nameController.text.trim(),
       );
+      _analytics.trackEvent('user_register');
     } catch (e) {
       setError('Account creation failed: ${e.toString()}');
     } finally {
@@ -208,6 +215,7 @@ class AuthViewModel extends BaseViewModel {
       Logger.log(runtimeType.toString(), 'Deletion of account requested');
       final deletionConfirmed = await _dialogService.showDeleteAccountConfirmation();
       _userIsMarkedForDeletion.value = true;
+      _analytics.trackEvent('account_deletion_requested');
       return deletionConfirmed;
     } on Exception catch (e, stackTrace) {
       Logger.error(runtimeType.toString(), 'Something went wrong: $e');

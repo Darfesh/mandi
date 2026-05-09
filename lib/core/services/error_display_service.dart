@@ -1,4 +1,6 @@
+import 'package:mandi/core/locator.dart';
 import 'package:mandi/core/models/app_error.dart';
+import 'package:mandi/core/services/analytics_service.dart';
 import 'package:mandi/core/services/banner_service.dart';
 import 'package:mandi/core/services/dialog_service.dart';
 import 'package:permission_handler/permission_handler.dart' as ph;
@@ -47,6 +49,8 @@ class ErrorDisplayService {
   }
 
   Future<void> showError(AppError error) async {
+    locator<AnalyticsService>().trackException(error);
+
     final context = _dialogService.context; 
     if (context == null) return;
 

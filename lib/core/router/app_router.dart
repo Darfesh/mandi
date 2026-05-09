@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mandi/core/locator.dart';
+import 'package:mandi/core/services/analytics_service.dart';
 import 'package:mandi/core/viewmodels/auth_view_model.dart';
 import 'package:mandi/ui/views/home_view.dart';
 import 'package:mandi/ui/views/login_view.dart';
@@ -15,6 +16,7 @@ import 'package:openpanel_flutter/openpanel_flutter.dart';
 class AppRouter {
   final AuthViewModel _authViewModel = locator<AuthViewModel>();
   final GlobalKey<NavigatorState> _navigatorKey = locator<GlobalKey<NavigatorState>>();
+  final AnalyticsService _analytics = locator<AnalyticsService>();
 
   late final GoRouter router;
 
@@ -104,9 +106,21 @@ class AppRouter {
     );
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Openpanel.instance.event(name: 'pageview', properties: {
-        'page': router.state.uri.toString(),
-      });
+      _analytics.trackPageView(router.state.uri.toString());
     });
+
+    _authViewModel.currentUser.addListener(_onUserChanged);
+    _onUserChanged();
+  }
+
+  void _onUserChanged() {
+    final user = _authViewModel.currentUser.value;
+    if (user != null) {
+      _analytics.identifyUser(
+        userId: user.id,
+        email: user.email,
+        name: user.fullName,
+      );
+    }
   }
 }

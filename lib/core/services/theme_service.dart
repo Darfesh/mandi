@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mandi/core/locator.dart';
+import 'package:mandi/core/services/analytics_service.dart';
 import 'package:mandi/core/services/shared_preferences_service.dart';
 import 'package:mandi/i18n/strings.g.dart';
 import 'package:mandi/core/utils/logger.dart';
@@ -61,6 +62,9 @@ class ThemeService {
       LocaleSettings.setLocaleRaw(languageCode);
 
       await _prefsService.setString(_languageKey, languageCode);
+      locator<AnalyticsService>().trackEvent('language_changed', properties: {
+        'language': languageCode,
+      });
       Logger.info(runtimeType.toString(), 'Language changed to: $languageCode');
     } catch (e) {
       Logger.error(runtimeType.toString(), 'Failed to save language: $e');
@@ -72,6 +76,9 @@ class ThemeService {
     try {
       _themeMode.value = mode;
       await _prefsService.setInt(_themeModeKey, mode.index);
+      locator<AnalyticsService>().trackEvent('theme_changed', properties: {
+        'theme': mode.name,
+      });
       Logger.info(runtimeType.toString(), 'Theme mode changed to: $mode');
     } catch (e) {
       Logger.error(runtimeType.toString(), 'Failed to save theme mode: $e');

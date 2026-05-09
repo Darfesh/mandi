@@ -1,10 +1,13 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:mandi/core/constants/environment.dart';
 import 'package:mandi/core/locator.dart';
 import 'package:mandi/core/router/app_router.dart';
+import 'package:mandi/core/services/analytics_service.dart';
 import 'package:mandi/core/services/app_info_service.dart';
 import 'package:mandi/core/services/shared_preferences_service.dart';
 import 'package:mandi/core/services/theme_service.dart';
+import 'package:mandi/core/models/app_error.dart';
 import 'package:mandi/ui/common/theme.dart';
 import 'package:mandi/i18n/strings.g.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -25,8 +28,31 @@ void main() async {
     ),
   );
 
+  locator<AnalyticsService>().initialize();
+
   await locator<SharedPreferencesService>().initialize();
   await locator<AppInfoService>().initialize();
+
+  FlutterError.onError = (details) {
+    FlutterError.presentError(details);
+    locator<AnalyticsService>().trackException(
+      AppError.unknown(
+        details: details.exceptionAsString(),
+        stackTrace: details.stack,
+      ),
+    );
+  };
+
+  PlatformDispatcher.instance.onError = (error, stackTrace) {
+    locator<AnalyticsService>().trackException(
+      AppError.unknown(
+        details: error.toString(),
+        stackTrace: stackTrace,
+      ),
+    );
+    return true;
+  };
+
   runApp(TranslationProvider(child: MyApp()));
 }
 

@@ -43,3 +43,9 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Platform-specific (tracked on separate branches)
+linux/
+
+# FVM machine-specific symlinks
+.fvm/

@@ -14,6 +14,7 @@ class NewsView extends StatelessWidget {
     final t = Translations.of(context);
 
     return ViewModelBuilder<NewsViewModel>(
+      onModelReady: (viewModel) => viewModel.getAllNewsPosts(),
       builder: ((context, viewModel) {
         return Scaffold(
           appBar: AppBar(

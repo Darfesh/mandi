@@ -12,7 +12,6 @@ class NewsViewModel extends BaseViewModel {
   final ValueNotifier<List<NewsDto>> _newsPosts = ValueNotifier([]);
   ValueListenable<List<NewsDto>> get newsPosts => _newsPosts;
   
-
   Future<void> getAllNewsPosts() async {
     try {
       setBusy(true);

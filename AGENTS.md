@@ -99,6 +99,82 @@ Unhandled errors: `FlutterError.onError` + `PlatformDispatcher.instance.onError`
 - Exceptions: tracked via `ErrorDisplayService.showError()` + global error handlers in main.dart
 - User ID: synced via auth state listener in `AppRouter._onUserChanged()`
 
+## Appwrite Architecture
+
+### ClientService (singleton)
+Central Appwrite SDK instance. All services use it via DI — no ad-hoc `Databases(client)` or `Storage(client)` creation.
+
+```
+ClientService
+  ├── Client     (endpoint + project)
+  ├── Account    (auth: sessions, identities)
+  ├── Databases  (document CRUD)
+  ├── Storage    (file upload/delete)
+  └── Realtime   (WebSocket subscriptions)
+```
+
+### Environment Configuration (`--dart-define`)
+
+| Var | Default (local) | Release override |
+|---|---|---|
+| `APPWRITE_ENDPOINT` | `http://localhost:3002/v1` | `https://api.usemandi.com/v1` |
+| `APPWRITE_PROJECT_ID` | `69fe5fa2002f9dc1783e` | `69ff292b00143eec6816` |
+| `APPWRITE_DATABASE_ID` | `mandi_main` | `68d2cc0a00207193ffeb` |
+| `APPWRITE_BUCKET_ID` | `mandi_avatars` | `698f385b00095eb336ac` |
+
+### Database Schema
+
+#### Collection: `users`
+| Field | Type | Required | Notes |
+|---|---|---|---|
+| `userId` | string | yes | Links to Appwrite Auth `$id` |
+| `email` | string | yes | |
+| `fullName` | string | yes | |
+| `displayName` | string? | no | |
+| `avatarUrl` | string? | no | Public URL to avatar in storage |
+| `status` | string? | no | `active` / `pendingDeletion` |
+| `accountMarkedForDeletionDate` | string? | no | ISO8601 timestamp |
+
+#### Collection: `news`
+| Field | Type | Required | Notes |
+|---|---|---|---|
+| `title` | string | yes | |
+| `content` | string | yes | |
+| `authorName` | string | yes | |
+| `createdAt` | string | yes | ISO8601 |
+| `isRtl` | bool | no | Right-to-left text support |
+| `imageUrl` | string? | no | |
+| `category` | string? | no | Future: link to `categories` or inline |
+
+#### Future collections
+- `categories` — for news categorization (RTL-aware: `name`, `slug`, `isRtl`)
+- `reservations` — planned feature
+
+### Storage Bucket: `mandi_avatars`
+- File ID pattern: `avatar_{userId}`
+- Permissions: `read(any)`, `update(user)`, `delete(user)`
+
+### Launch Configurations (VS Code)
+
+| Config | Profile | Endpoint | Database | Bucket |
+|---|---|---|---|---|
+| Debug Local (Android Emulator) | debug | `http://10.0.2.2:3002/v1` | `mandi_main` | `mandi_avatars` |
+| Profile Local (Android Emulator) | profile | `http://10.0.2.2:3002/v1` | `mandi_main` | `mandi_avatars` |
+| Debug Local | debug | defaults | defaults | defaults |
+| Profile Local | profile | defaults | defaults | defaults |
+| Release | release | hosted | hosted | hosted |
+
+### Setting Up a New Local Environment
+
+1. Start Appwrite (`appwrite start` or via Podman/Docker)
+2. Open console at `http://localhost:3002`
+3. Create project `mandi` (or use existing `69fe5fa2002f9dc1783e`)
+4. Create database **mandi_main**
+5. Create collection **users** with schema above
+6. Create collection **news** with schema above
+7. Create bucket **mandi_avatars** with `read(any)` permission
+8. Play Store: Add Flutter Android platform for `com.example.mandi`
+
 ## Branches
 - `feat/openpanel-analytics` — current, has analytics integration + docs
 - `chore/linux-support` — Linux desktop platform files

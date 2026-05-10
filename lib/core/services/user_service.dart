@@ -45,10 +45,9 @@ class UserService {
       Logger.info(runtimeType.toString(), 'Fetching user data...');
 
       final appwriteUser = await _account.get();
-      final databases = Databases(_clientService.client);
 
       // Check if user document exists
-      final docs = await databases.listDocuments(
+      final docs = await _clientService.databases.listDocuments(
         databaseId: Environment.databaseId,
         collectionId: AppwriteCollections.users,
         queries: [
@@ -60,7 +59,7 @@ class UserService {
         // Create document
         Logger.info(runtimeType.toString(), '📝 Creating user document...');
 
-        await databases.createDocument(
+        await _clientService.databases.createDocument(
           databaseId: Environment.databaseId,
           collectionId: AppwriteCollections.users,
           documentId: ID.unique(),
@@ -82,7 +81,7 @@ class UserService {
       }
 
       // Fetch document (now guaranteed to exist)
-      final updatedDocs = await databases.listDocuments(
+      final updatedDocs = await _clientService.databases.listDocuments(
         databaseId: Environment.databaseId,
         collectionId: AppwriteCollections.users,
         queries: [
@@ -107,10 +106,8 @@ class UserService {
         throw Exception('No user logged in');
       }
 
-      final databases = Databases(_clientService.client);
-
       // 1. Find document by userId
-      final docs = await databases.listDocuments(
+      final docs = await _clientService.databases.listDocuments(
         databaseId: Environment.databaseId,
         collectionId: AppwriteCollections.users,
         queries: [
@@ -129,7 +126,7 @@ class UserService {
       Logger.info(runtimeType.toString(), 'Updating document: $documentId');
 
       // 4. Update document
-      final updatedDoc = await databases.updateDocument(
+      final updatedDoc = await _clientService.databases.updateDocument(
         databaseId: Environment.databaseId,
         collectionId: AppwriteCollections.users,
         documentId: documentId,

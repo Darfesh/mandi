@@ -1,4 +1,3 @@
-import 'package:appwrite/appwrite.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mandi/core/services/analytics_service.dart';
@@ -32,7 +31,7 @@ void setupLocator() {
   locator.registerSingleton(RealtimeService());
   locator.registerSingleton(
     NewsService(
-      databases: Databases(locator<ClientService>().client),
+      databases: locator<ClientService>().databases,
     ),
   );
 
@@ -48,7 +47,7 @@ void setupLocator() {
       ));
   locator.registerLazySingleton(
     () => UserRepository(
-      databases: Databases(locator<ClientService>().client),
+      databases: locator<ClientService>().databases,
     ),
   );
 

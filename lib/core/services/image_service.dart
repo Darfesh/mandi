@@ -83,10 +83,9 @@ class ImageService {
     try {
       Logger.info(runtimeType.toString(), 'Uploading avatar to Appwrite...');
 
-      final storage = Storage(_clientService.client);
       final fileId = 'avatar_$userId';
 
-      final file = await storage.createFile(
+      final file = await _clientService.storage.createFile(
         bucketId: Environment.bucketID,
         fileId: fileId,
         file: InputFile.fromPath(
@@ -118,10 +117,9 @@ class ImageService {
     try {
       Logger.info(runtimeType.toString(), 'Deleting old avatar...');
 
-      final storage = Storage(_clientService.client);
       final fileId = 'avatar_$userId';
 
-      await storage.deleteFile(
+      await _clientService.storage.deleteFile(
         bucketId: Environment.bucketID,
         fileId: fileId,
       );

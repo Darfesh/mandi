@@ -3,24 +3,31 @@ class Environment {
   /// Override with --dart-define=APPWRITE_PROJECT_ID=... at build time.
   static const String appwriteProjectId = String.fromEnvironment(
     'APPWRITE_PROJECT_ID',
-    defaultValue: '69ff92820015f53bf31c',
+    defaultValue: '69fe5fa2002f9dc1783e',
   );
   static const String appwriteProjectName = 'Mandi';
+
   /// Override with --dart-define=APPWRITE_ENDPOINT=... at build time.
   static const String appwritePublicEndpoint = String.fromEnvironment(
     'APPWRITE_ENDPOINT',
-    defaultValue: 'http://localhost/v1',
+    defaultValue: 'http://localhost:3002/v1',
   );
 
   /// Real-time channels
   // Account
   static const String accountChannel = 'account';
 
-  // Database
-  static const String databaseId = '68d2cc0a00207193ffeb';
+  /// Override with --dart-define=APPWRITE_DATABASE_ID=... at build time.
+  static const String databaseId = String.fromEnvironment(
+    'APPWRITE_DATABASE_ID',
+    defaultValue: 'mandi',
+  );
 
-  // Storage
-  static const String bucketID = '698f385b00095eb336ac';
+  /// Override with --dart-define=APPWRITE_BUCKET_ID=... at build time.
+  static const String bucketID = String.fromEnvironment(
+    'APPWRITE_BUCKET_ID',
+    defaultValue: 'avatars',
+  );
 
   /// OpenPanel Analytics
   /// Override with --dart-define at build time.

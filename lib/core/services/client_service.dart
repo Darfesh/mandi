@@ -5,6 +5,7 @@ class ClientService {
   late final Client client;
   late final Account account;
   late final Databases databases;
+  late final Storage storage;
   late final Realtime realtime;
 
   ClientService() {
@@ -14,6 +15,7 @@ class ClientService {
 
     account = Account(client);
     databases = Databases(client);
+    storage = Storage(client);
     realtime = Realtime(client);
   }
 }

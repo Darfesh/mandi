@@ -45,6 +45,7 @@ class TranslationsNl with BaseTranslations<AppLocale, Translations> implements T
 	@override late final _TranslationsErrorsNl errors = _TranslationsErrorsNl._(_root);
 	@override late final _TranslationsProfileNl profile = _TranslationsProfileNl._(_root);
 	@override late final _TranslationsSettingsNl settings = _TranslationsSettingsNl._(_root);
+	@override late final _TranslationsNewsNl news = _TranslationsNewsNl._(_root);
 	@override late final _TranslationsAuthNl auth = _TranslationsAuthNl._(_root);
 }
 
@@ -147,6 +148,17 @@ class _TranslationsSettingsNl implements TranslationsSettingsEn {
 	@override String get title => 'Instellingen';
 	@override late final _TranslationsSettingsLanguageNl language = _TranslationsSettingsLanguageNl._(_root);
 	@override late final _TranslationsSettingsThemeNl theme = _TranslationsSettingsThemeNl._(_root);
+}
+
+// Path: news
+class _TranslationsNewsNl implements TranslationsNewsEn {
+	_TranslationsNewsNl._(this._root);
+
+	final TranslationsNl _root; // ignore: unused_field
+
+	// Translations
+	@override String get empty => 'Geen nieuws beschikbaar';
+	@override String get title => 'Nieuws';
 }
 
 // Path: auth
@@ -385,6 +397,8 @@ extension on TranslationsNl {
 			'settings.theme.systemDesc' => 'Volg iPhone/iPad instelling',
 			'settings.theme.dark' => 'Donker',
 			'settings.theme.darkDesc' => 'Altijd donkere modus',
+			'news.empty' => 'Geen nieuws beschikbaar',
+			'news.title' => 'Nieuws',
 			'auth.login' => 'Inloggen',
 			'auth.logout' => 'Uitloggen',
 			'auth.email' => 'E-mailadres',

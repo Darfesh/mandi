@@ -19,9 +19,15 @@ class NewsViewModel extends BaseViewModel {
     } catch (e) {
       Logger.error(
           runtimeType.toString(), 'Failed to get posts from server: $e');
-      rethrow;
+      setError(e.toString());
     } finally {
       setBusy(false);
     }
+  }
+
+  @override
+  void dispose() {
+    _newsPosts.dispose();
+    super.dispose();
   }
 }

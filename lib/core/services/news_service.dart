@@ -14,7 +14,7 @@ class NewsService {
     try {
       final documentList = await _databases.listDocuments(
           databaseId: Environment.databaseId,
-          collectionId: AppwriteCollections.news,
+          collectionId: AppwriteCollections.news_articles,
           queries: [Query.limit(20)]);
 
       //For future pagination use appwrite cursor pagination: https://appwrite.io/docs/products/databases/pagination
@@ -24,9 +24,9 @@ class NewsService {
         return [];
       }
 
-      return documentList.documents.map((post) {
-        return NewsDto.fromJson(post.data);
-      }).toList();
+      return documentList.documents
+          .map((doc) => NewsDto.fromDocument(doc))
+          .toList();
     } on AppwriteException catch (e) {
       Logger.error(runtimeType.toString(),
           'Appwrite error getting the news posts: ${e.message}');

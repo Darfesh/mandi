@@ -48,6 +48,7 @@ class Translations with BaseTranslations<AppLocale, Translations> {
 	late final TranslationsErrorsEn errors = TranslationsErrorsEn._(_root);
 	late final TranslationsProfileEn profile = TranslationsProfileEn._(_root);
 	late final TranslationsSettingsEn settings = TranslationsSettingsEn._(_root);
+	late final TranslationsNewsEn news = TranslationsNewsEn._(_root);
 	late final TranslationsAuthEn auth = TranslationsAuthEn._(_root);
 }
 
@@ -192,6 +193,21 @@ class TranslationsSettingsEn {
 
 	late final TranslationsSettingsLanguageEn language = TranslationsSettingsLanguageEn._(_root);
 	late final TranslationsSettingsThemeEn theme = TranslationsSettingsThemeEn._(_root);
+}
+
+// Path: news
+class TranslationsNewsEn {
+	TranslationsNewsEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'No news available'
+	String get empty => 'No news available';
+
+	/// en: 'News'
+	String get title => 'News';
 }
 
 // Path: auth
@@ -554,6 +570,8 @@ extension on Translations {
 			'settings.theme.systemDesc' => 'Follow device setting',
 			'settings.theme.dark' => 'Dark',
 			'settings.theme.darkDesc' => 'Always dark mode',
+			'news.empty' => 'No news available',
+			'news.title' => 'News',
 			'auth.login' => 'Login',
 			'auth.logout' => 'Logout',
 			'auth.email' => 'Email address',

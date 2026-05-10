@@ -45,6 +45,7 @@ class TranslationsAr with BaseTranslations<AppLocale, Translations> implements T
 	@override late final _TranslationsErrorsAr errors = _TranslationsErrorsAr._(_root);
 	@override late final _TranslationsProfileAr profile = _TranslationsProfileAr._(_root);
 	@override late final _TranslationsSettingsAr settings = _TranslationsSettingsAr._(_root);
+	@override late final _TranslationsNewsAr news = _TranslationsNewsAr._(_root);
 	@override late final _TranslationsAuthAr auth = _TranslationsAuthAr._(_root);
 }
 
@@ -147,6 +148,17 @@ class _TranslationsSettingsAr implements TranslationsSettingsEn {
 	@override String get title => 'الإعدادات';
 	@override late final _TranslationsSettingsLanguageAr language = _TranslationsSettingsLanguageAr._(_root);
 	@override late final _TranslationsSettingsThemeAr theme = _TranslationsSettingsThemeAr._(_root);
+}
+
+// Path: news
+class _TranslationsNewsAr implements TranslationsNewsEn {
+	_TranslationsNewsAr._(this._root);
+
+	final TranslationsAr _root; // ignore: unused_field
+
+	// Translations
+	@override String get empty => 'لا توجد أخبار متاحة';
+	@override String get title => 'الأخبار';
 }
 
 // Path: auth
@@ -385,6 +397,8 @@ extension on TranslationsAr {
 			'settings.theme.systemDesc' => 'اتبع إعداد الجهاز',
 			'settings.theme.dark' => 'داكن',
 			'settings.theme.darkDesc' => 'الوضع الداكن دائماً',
+			'news.empty' => 'لا توجد أخبار متاحة',
+			'news.title' => 'الأخبار',
 			'auth.login' => 'تسجيل الدخول',
 			'auth.logout' => 'تسجيل الخروج',
 			'auth.email' => 'البريد الإلكتروني',

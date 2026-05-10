@@ -119,6 +119,11 @@
     }
   },
   
+  "news": {
+    "empty": "No news available",
+    "title": "News"
+  },
+
   "auth": {
     "login": "Login",
     "logout": "Logout",

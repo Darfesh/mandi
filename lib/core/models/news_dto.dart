@@ -1,3 +1,4 @@
+import 'package:appwrite/models.dart' as appwrite_models;
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'news_dto.freezed.dart';
@@ -16,4 +17,11 @@ abstract class NewsDto with _$NewsDto {
   }) = _NewsDto;
 
   factory NewsDto.fromJson(Map<String, dynamic> json) => _$NewsDtoFromJson(json);
+
+  factory NewsDto.fromDocument(appwrite_models.Document doc) {
+    final data = Map<String, dynamic>.from(doc.data)
+      ..['id'] = doc.$id
+      ..['createdAt'] = doc.$createdAt;
+    return NewsDto.fromJson(data);
+  }
 }

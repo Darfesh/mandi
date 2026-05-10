@@ -120,6 +120,11 @@
     }
   },
   
+  "news": {
+    "empty": "Geen nieuws beschikbaar",
+    "title": "Nieuws"
+  },
+
   "auth": {
     "login": "Inloggen",
     "logout": "Uitloggen",

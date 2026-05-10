@@ -2,7 +2,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Debug Local (Android Emulator)",
+      "name": "Debug Local (Android)",
       "request": "launch",
       "type": "dart",
       "program": "lib/main.dart",
@@ -10,12 +10,12 @@
       "args": [
         "--dart-define=APPWRITE_ENDPOINT=http://10.0.2.2:3002/v1",
         "--dart-define=APPWRITE_PROJECT_ID=69fe5fa2002f9dc1783e",
-        "--dart-define=APPWRITE_DATABASE_ID=mandi_main",
-        "--dart-define=APPWRITE_BUCKET_ID=mandi_avatars"
+        "--dart-define=APPWRITE_DATABASE_ID=mandi",
+        "--dart-define=APPWRITE_BUCKET_ID=avatars"
       ]
     },
     {
-      "name": "Profile Local (Android Emulator)",
+      "name": "Profile Local (Android)",
       "request": "launch",
       "type": "dart",
       "program": "lib/main.dart",
@@ -23,8 +23,8 @@
       "args": [
         "--dart-define=APPWRITE_ENDPOINT=http://10.0.2.2:3002/v1",
         "--dart-define=APPWRITE_PROJECT_ID=69fe5fa2002f9dc1783e",
-        "--dart-define=APPWRITE_DATABASE_ID=mandi_main",
-        "--dart-define=APPWRITE_BUCKET_ID=mandi_avatars"
+        "--dart-define=APPWRITE_DATABASE_ID=mandi",
+        "--dart-define=APPWRITE_BUCKET_ID=avatars"
       ]
     },
     {

@@ -1,24 +1,20 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:mandi/core/constants/environment.dart';
-import 'package:mandi/core/viewmodels/news_view_model.dart';
+import 'package:mandi/core/models/news_dto.dart';
 import 'package:mandi/ui/widgets/news/news_label_row.dart';
 
 class NewsCardContent extends StatelessWidget {
-  final NewsViewModel viewModel;
-  final int index;
+  final NewsDto newsItem;
 
   const NewsCardContent({
     super.key,
-    required this.viewModel,
-    required this.index,
+    required this.newsItem,
   });
 
   @override
   Widget build(BuildContext context) {
-    final newsItem = viewModel.newsPosts.value[index];
+    final newsItem = this.newsItem;
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -26,11 +22,22 @@ class NewsCardContent extends StatelessWidget {
       children: [
         AspectRatio(
           aspectRatio: 4 / 3,
-          child: Image.asset(
-            'assets/images/darfesh.png',
-            fit: BoxFit.fitHeight,
-            alignment: Alignment.center,
-          ),
+          child: newsItem.imageUrl != null
+              ? Image.network(
+                  newsItem.imageUrl!,
+                  fit: BoxFit.fitHeight,
+                  alignment: Alignment.center,
+                  errorBuilder: (_, __, ___) => Image.asset(
+                    'assets/images/darfesh.png',
+                    fit: BoxFit.fitHeight,
+                    alignment: Alignment.center,
+                  ),
+                )
+              : Image.asset(
+                  'assets/images/darfesh.png',
+                  fit: BoxFit.fitHeight,
+                  alignment: Alignment.center,
+                ),
         ),
         Padding(
           padding: const EdgeInsets.all(Environment.size8),

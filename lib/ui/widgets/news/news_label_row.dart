@@ -22,9 +22,9 @@ class NewsLabelRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Expanded(
-          child: IconLabelText(
+          child:           IconLabelText(
             icon: Icons.person_outline,
-            text: 'Translate here',
+            text: authorName,
           ),
         ),
         const Gap(Environment.size16),

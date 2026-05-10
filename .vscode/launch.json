@@ -2,14 +2,14 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Debug",
+      "name": "Debug Local",
       "request": "launch",
       "type": "dart",
       "program": "lib/main.dart",
       "flutterMode": "debug"
     },
     {
-      "name": "Profile",
+      "name": "Profile Local",
       "request": "launch",
       "type": "dart",
       "program": "lib/main.dart",
@@ -20,7 +20,11 @@
       "request": "launch",
       "type": "dart",
       "program": "lib/main.dart",
-      "flutterMode": "release"
+      "flutterMode": "release",
+      "args": [
+        "--dart-define=APPWRITE_ENDPOINT=https://api.usemandi.com/v1",
+        "--dart-define=APPWRITE_PROJECT_ID=69ff292b00143eec6816"
+      ]
     }
   ]
 }

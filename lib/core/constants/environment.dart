@@ -1,8 +1,16 @@
 class Environment {
   /// Project ID's
-  static const String appwriteProjectId = '68ceaf1c0003f5c4f746';
+  /// Override with --dart-define=APPWRITE_PROJECT_ID=... at build time.
+  static const String appwriteProjectId = String.fromEnvironment(
+    'APPWRITE_PROJECT_ID',
+    defaultValue: '69ff92820015f53bf31c',
+  );
   static const String appwriteProjectName = 'Mandi';
-  static const String appwritePublicEndpoint = 'https://fra.cloud.appwrite.io/v1';
+  /// Override with --dart-define=APPWRITE_ENDPOINT=... at build time.
+  static const String appwritePublicEndpoint = String.fromEnvironment(
+    'APPWRITE_ENDPOINT',
+    defaultValue: 'http://localhost/v1',
+  );
 
   /// Real-time channels
   // Account

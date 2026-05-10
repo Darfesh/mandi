@@ -1,0 +1,32 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Build Release (iOS)",
+      "type": "shell",
+      "command": "fvm flutter build ios --release --no-codesign",
+      "args": [
+        "--dart-define=APPWRITE_ENDPOINT=https://api.usemandi.com/v1",
+        "--dart-define=APPWRITE_PROJECT_ID=69ff292b00143eec6816"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Build Release (Android)",
+      "type": "shell",
+      "command": "fvm flutter build appbundle --release",
+      "args": [
+        "--dart-define=APPWRITE_ENDPOINT=https://api.usemandi.com/v1",
+        "--dart-define=APPWRITE_PROJECT_ID=69ff292b00143eec6816"
+      ],
+      "group": {
+        "kind": "build"
+      },
+      "problemMatcher": []
+    }
+  ]
+}

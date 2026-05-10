@@ -175,33 +175,6 @@ ClientService
 7. Create bucket **mandi_avatars** with `read(any)` permission
 8. Play Store: Add Flutter Android platform for `com.example.mandi`
 
-## Appwrite Functions
-
-### `account-cleanup` (Dart)
-Cron job die dagelijks accounts permanent verwijdert die 30+ dagen geleden zijn gemarkeerd voor verwijdering.
-
-**Locatie:** `functions/account-cleanup/`
-
-**Flow:**
-1. Query `users` waar `status == 'pendingDeletion'` en `accountMarkedForDeletionDate` > 30 dagen oud
-2. Verwijder avatar uit storage bucket
-3. Verwijder user document
-4. Verwijder Appwrite Auth user
-
-**Deployen:**
-```bash
-appwrite push functions --all --force
-```
-
-**Benodigde API key scopes:**
-- `databases.read` / `databases.write`
-- `storage.write`
-- `users.read` / `users.write`
-
-**Schedule:** cron `0 0 * * *` (dagelijks middernacht)
-
-**Omgevingsvariabelen:** `APPWRITE_DATABASE_ID`, `APPWRITE_BUCKET_ID`, `APPWRITE_API_KEY`
-
 ## Branches
 - `feat/openpanel-analytics` — current, has analytics integration + docs
 - `chore/linux-support` — Linux desktop platform files

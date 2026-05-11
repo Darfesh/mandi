@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:mandi/core/constants/environment.dart';
@@ -22,7 +21,7 @@ class NewsLabelRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Expanded(
-          child:           IconLabelText(
+          child: IconLabelText(
             icon: Icons.person_outline,
             text: authorName,
           ),

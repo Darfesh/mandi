@@ -17,7 +17,7 @@ class NewsCard extends StatelessWidget {
         clipBehavior: Clip.antiAlias,
         elevation: 1,
         shadowColor: Colors.white,
-        color: Colors.white,
+        color: Theme.of(context).cardColor,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
             Radius.circular(Environment.size12),

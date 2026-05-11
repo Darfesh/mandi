@@ -14,31 +14,20 @@ class NewsCardContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final newsItem = this.newsItem;
-
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        AspectRatio(
-          aspectRatio: 4 / 3,
-          child: newsItem.imageUrl != null
-              ? Image.network(
-                  newsItem.imageUrl!,
-                  fit: BoxFit.fitHeight,
-                  alignment: Alignment.center,
-                  errorBuilder: (_, __, ___) => Image.asset(
-                    'assets/images/darfesh.png',
-                    fit: BoxFit.fitHeight,
-                    alignment: Alignment.center,
-                  ),
-                )
-              : Image.asset(
-                  'assets/images/darfesh.png',
-                  fit: BoxFit.fitHeight,
-                  alignment: Alignment.center,
-                ),
-        ),
+        if (newsItem.imageUrl != null)
+          AspectRatio(
+            aspectRatio: 4 / 3,
+            child: Image.network(
+              newsItem.imageUrl!,
+              fit: BoxFit.cover,
+              alignment: Alignment.center,
+              errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+            ),
+          ),
         Padding(
           padding: const EdgeInsets.all(Environment.size8),
           child: Column(
@@ -57,7 +46,6 @@ class NewsCardContent extends StatelessWidget {
                 newsItem.content,
               ),
               const Gap(Environment.size16),
-              // Label Row
               NewsLabelRow(
                 authorName: newsItem.authorName,
                 publishedAt: newsItem.createdAt,
